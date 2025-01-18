@@ -1,21 +1,29 @@
 # Project 3: Spots
 
-### Overview  
+### Overview
 
-* Intro  
-* Figma  
-* Images  
-  
-**Intro**
-  
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
-  
-**Figma**  
-  
-* [Link to the project on Figma](https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
-  
-**Images**  
-  
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-  
-Good luck and have fun!
+- Description
+- Tech Stack
+- Project Images
+- Deployment
+
+## Description
+
+This project gives a demonstration of a photo sharing site that is responsive to different device sizes. Currently, this project allows the user to view several different images belonging to a certain profile. There is an option to edit the profile, add new photos, or like the existing photos. While these options are available, they currently do not do anything. In future projects we will be tying the buttons to further functionality.
+
+## Tech Stack
+
+- HTML
+- CSS
+- Responsive Web Design
+- Grid layouts
+
+## Project Images
+
+<img src="./images/full_site.png" alt="Full Site">
+<img src="./images/small_view.png" alt="Mobile View">
+<img src="./images/card_view.png" alt="Card View">
+
+## Deployment
+
+This webpage is deployed to github pages.
