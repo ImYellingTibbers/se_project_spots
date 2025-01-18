@@ -8,6 +8,7 @@
   margin-right: 20px;
   height: 190px;
   width: 190px;
+  border-radius: 8px;
 }
 
 .profile__column {
@@ -59,7 +60,6 @@
 
 .profile__edit-button-icon {
   margin-right: 8px;
-  background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -70,7 +70,7 @@
   width: 149px;
   background-color: #212121;
   color: #fcf5e5;
-  border-radius: 10px;
+  border-radius: 8px;
   border-style: none;
   font-weight: 500;
   font-size: 16px;

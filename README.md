@@ -18,12 +18,20 @@ This project gives a demonstration of a photo sharing site that is responsive to
 - Responsive Web Design
 - Grid layouts
 
+## Deployment
+
+This webpage is deployed to github pages. You can find the deployed page at the following URL: 
+
+https://mybaretibs.github.io/se_project_spots/
+
+## Project Video
+
+Check out this video description of the project, linked here:
+
+https://drive.google.com/file/d/17M6eTcRnXztPsuHfYFXnbh8hPKhd-7hp/view?usp=sharing
+
 ## Project Images
 
 <img src="./images/full_site.png" alt="Full Site">
 <img src="./images/small_view.png" alt="Mobile View">
 <img src="./images/card_view.png" alt="Card View">
-
-## Deployment
-
-This webpage is deployed to github pages.
