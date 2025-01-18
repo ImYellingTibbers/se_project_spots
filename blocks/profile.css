@@ -15,10 +15,16 @@
 
 .profile__name {
   margin: 0 0 12px;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
 }
 
 .profile__description {
   margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .profile__edit-button {
@@ -27,12 +33,15 @@
   background-color: transparent;
   border: none;
   padding: 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .profile__edit-button-icon {
-  height: 16px;
   margin-right: 8px;
-  
 }
 
 .profile__add-button {
@@ -44,6 +53,9 @@
   color: #FCF5E5;
   border-radius: 10px;
   border-style: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .profile__add-button-icon {
