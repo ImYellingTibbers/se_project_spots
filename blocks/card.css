@@ -28,6 +28,11 @@
   background-repeat: no-repeat;
 }
 
+.card__like-button:hover {
+  opacity: 100%;
+  cursor: pointer;
+}
+
 .card__content {
   display: flex;
   align-items: flex-end;
