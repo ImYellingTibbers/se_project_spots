@@ -46,6 +46,7 @@
             <template id="card-template">
               <li class="card">
                 <img src="" alt="" class="card__image" />
+                <button type="button" class="card__delete-button"></button>
                 <div class="card__content">
                   <h2 class="card__title"></h2>
                   <button type="button" class="card__like-button"></button>
@@ -59,10 +60,10 @@
         <p class="footer__copyright">2025 &copy; Spots</p>
       </footer>
       <div class="modal" id="edit-modal">
-        <div class="modal__container">
+        <div class="modal__content">
           <button class="modal__close-button" type="button"></button>
           <h2 class="modal__title">Edit profile</h2>
-          <form name="edit-profile" class="modal__form">
+          <form id="edit-profile" class="modal__form">
             <label for="profile-name-input" class="modal__label">
               Name
               <input
@@ -83,6 +84,47 @@
             </label>
             <button class="modal__submit-button" type="submit">Save</button>
           </form>
+        </div>
+      </div>
+
+      <div class="modal" id="add-card-modal">
+        <div class="modal__content">
+          <button class="modal__close-button" type="button"></button>
+          <h2 class="modal__title">New Post</h2>
+          <form id="add-card-form" class="modal__form">
+            <label for="add-card-link-input" class="modal__label">
+              Image link
+              <input
+                id="add-card-link-input"
+                type="url"
+                class="modal__input"
+                name="link"
+                placeholder="Paste a link to the picture"
+              />
+            </label>
+            <label for="add-card-name-input" class="modal__label">
+              Caption
+              <input
+                id="add-card-name-input"
+                type="text"
+                class="modal__input"
+                name="name"
+                placeholder="Type your caption"
+              />
+            </label>
+            <button class="modal__submit-button" type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="preview-modal">
+        <div class="modal__content modal__content_type_preview">
+          <button
+            class="modal__close-button modal__close-button_type_preview"
+            type="button"
+          ></button>
+          <img src="" alt="" class="modal__image" />
+          <p class="modal__caption"></p>
         </div>
       </div>
     </div>
