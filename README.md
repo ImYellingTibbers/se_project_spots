@@ -20,9 +20,9 @@ This project gives a demonstration of a photo sharing site that is responsive to
 
 ## Deployment
 
-This webpage is deployed to github pages. You can find the deployed page at the following URL: 
+This webpage is deployed to github pages. You can find the deployed page at the following URL:
 
-https://mybaretibs.github.io/se_project_spots/
+https://imyellingtibbers.github.io/se_project_spots/
 
 ## Project Video
 
