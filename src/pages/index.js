@@ -1,3 +1,6 @@
+import { settings, disableButton, resetValidation, enableValidation } from "../scripts/validation.js";
+import "./index.css";
+
 const initialCards = [
   {
     name: "Val Thorens",
@@ -175,3 +178,5 @@ cardForm.addEventListener("submit", handleCardFormSubmit);
 initialCards.forEach((card) => {
   cardsList.prepend(getCardElement(card));
 });
+
+enableValidation(settings);
