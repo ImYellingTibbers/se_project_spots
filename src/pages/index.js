@@ -68,7 +68,9 @@ const deleteModalCloseButton = deleteModal.querySelector(
 const deleteModalDeleteButton = deleteModal.querySelector(
   ".modal__delete-button"
 );
-const deleteModalCancelButton = deleteModal.querySelector(".modal__cancel-button")
+const deleteModalCancelButton = deleteModal.querySelector(
+  ".modal__cancel-button"
+);
 
 let selectedCard, selectedCardId;
 
@@ -102,13 +104,20 @@ function getCardElement(data) {
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
-  cardLikeButton.addEventListener("click", () => {
-    cardLikeButton.classList.toggle("card__like-button-liked");
-  });
+  if(data.isLiked) {
+    cardLikeButton.classList.add("card__like-button-liked");
+  } else {
+    cardLikeButton.classList.remove("card__like-button-liked");
+  }
 
-  cardDeleteButton.addEventListener("click", (evt) => {
-    handleDeleteCard(cardElement, data._id);
-  });
+  cardLikeButton.addEventListener(
+    "click",
+    (evt) => handleLike(evt, data._id)
+  );
+
+  cardDeleteButton.addEventListener("click", () =>
+    handleDeleteCard(cardElement, data._id)
+  );
 
   cardImgEl.addEventListener("click", () => {
     openModal(previewModal);
@@ -153,7 +162,7 @@ function closeModal(modal) {
 
 function handleProfileFormSubmit(e) {
   e.preventDefault();
-  renderLoading(editProfileModal, true);
+  renderLoading(editProfileModal, true, "Saving...", "Save");
   api
     .editUserInfo({
       name: editProfileModalNameInput.value,
@@ -166,12 +175,12 @@ function handleProfileFormSubmit(e) {
       disableButton(editProfileSubmitButton, settings);
     })
     .catch(console.error)
-    .finally(renderLoading(editProfileModal, false));
+    .finally(renderLoading(editProfileModal, false, "Saving...", "Save"));
 }
 
 function handleCardFormSubmit(e) {
   e.preventDefault();
-  renderLoading(addCardModal, true);
+  renderLoading(addCardModal, true, "Saving...", "Save");
   api
     .addPhoto({
       name: cardModalNameInput.value,
@@ -188,24 +197,34 @@ function handleCardFormSubmit(e) {
       closeModal(addCardModal);
     })
     .catch(console.error)
-    .finally(renderLoading(addCardModal, false));
+    .finally(renderLoading(addCardModal, false, "Saving...", "Save"));
 }
 
 function handleDeleteSubmit(e) {
   e.preventDefault();
+  renderLoading(deleteModal, true, "Deleting...", "Delete");
   api
     .deleteCard(selectedCardId)
     .then(() => {
       selectedCard.remove();
       closeModal(deleteModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(renderLoading(deleteModal, false, "Deleting...", "Delete"));
 }
 
 function handleDeleteCard(cardElement, cardId) {
   selectedCard = cardElement;
   selectedCardId = cardId;
   openModal(deleteModal);
+}
+
+function handleLike(evt, id) {
+  const isLiked = evt.target.classList.contains("card__like-button-liked")
+  api.toggleLiked(id, isLiked)
+  .then(() => {
+  evt.target.classList.toggle("card__like-button-liked");
+  }).catch(console.error);
 }
 
 function handleAvatarFormSubmit(e) {
@@ -225,11 +244,11 @@ function handleAvatarFormSubmit(e) {
     .finally(renderLoading(avatarModal, false));
 }
 
-function renderLoading(container, isLoading) {
+function renderLoading(container, isLoading, loadingText, defaultText) {
   if (isLoading) {
-    container.querySelector(".modal__submit-button").textContent = "Saving...";
+    container.querySelector(".modal__submit-button").textContent = loadingText;
   } else {
-    container.querySelector(".modal__submit-button").textContent = "Save";
+    container.querySelector(".modal__submit-button").textContent = defaultText;
   }
 }
 
