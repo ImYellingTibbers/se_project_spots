@@ -57,6 +57,9 @@ const editProfileModalNameInput = editProfileModal.querySelector(
 const editProfileModalDescriptionInput = editProfileModal.querySelector(
   "#profile-description-input"
 );
+const editProfileSubmitButton = editProfileModal.querySelector(
+  ".modal__submit-button"
+);
 
 // Avatar elements
 const editAvatarButton = document.querySelector(".profile__avatar-button");
@@ -93,6 +96,12 @@ const deleteModal = document.querySelector("#delete-modal");
 const deleteModalCloseButton = deleteModal.querySelector(
   ".modal__close-button"
 );
+const deleteModalDeleteButton = deleteModal.querySelector(
+  ".modal__delete-button"
+);
+const deleteModalCancelButton = deleteModal.querySelector(".modal__cancel-button")
+
+let selectedCard, selectedCardId;
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -106,7 +115,7 @@ api
   .getAppInfo()
   .then(([cards, user]) => {
     cards.forEach((card) => {
-      cardsList.prepend(getCardElement(card));
+      cardsList.append(getCardElement(card));
     });
     profileName.textContent = user.name;
     profileDescription.textContent = user.about;
@@ -128,13 +137,9 @@ function getCardElement(data) {
     cardLikeButton.classList.toggle("card__like-button-liked");
   });
 
-  cardDeleteButton.addEventListener("click", () => {
-    openModal(deleteModal);
+  cardDeleteButton.addEventListener("click", (evt) => {
+    handleDeleteCard(cardElement, data._id);
   });
-
-  // cardDeleteButton.addEventListener("click", () => {
-  //   cardElement.remove();
-  // });
 
   cardImgEl.addEventListener("click", () => {
     openModal(previewModal);
@@ -189,23 +194,49 @@ function handleProfileFormSubmit(e) {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
       closeModal(editProfileModal);
+      disableButton(editProfileSubmitButton, settings);
     })
-    .catch(console.error);
-  renderLoading(editProfileModal, false);
+    .catch(console.error)
+    .finally(renderLoading(editProfileModal, false));
 }
 
 function handleCardFormSubmit(e) {
   e.preventDefault();
   renderLoading(addCardModal, true);
-  const inputValues = {
-    name: cardModalNameInput.value,
-    link: cardModalLinkInput.value,
-  };
-  cardsList.prepend(getCardElement(inputValues));
-  e.target.reset();
-  disableButton(cardSubmitButton, settings);
-  closeModal(addCardModal);
-  renderLoading(addCardModal, false);
+  api
+    .addPhoto({
+      name: cardModalNameInput.value,
+      link: cardModalLinkInput.value,
+    })
+    .then((data) => {
+      const inputValues = {
+        name: data.name,
+        link: data.link,
+      };
+      cardsList.prepend(getCardElement(inputValues));
+      e.target.reset();
+      disableButton(cardSubmitButton, settings);
+      closeModal(addCardModal);
+    })
+    .catch(console.error)
+    .finally(renderLoading(addCardModal, false));
+}
+
+function handleDeleteSubmit(e) {
+  e.preventDefault();
+  api
+    .deleteCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      closeModal(deleteModal);
+    })
+    .catch(console.error);
+}
+
+function handleDeleteCard(cardElement, cardId) {
+  selectedCard = cardElement;
+  selectedCardId = cardId;
+  openModal(deleteModal);
 }
 
 function handleAvatarFormSubmit(e) {
@@ -219,9 +250,10 @@ function handleAvatarFormSubmit(e) {
       profileAvatar.src = data.avatar;
       closeModal(avatarModal);
       e.target.reset();
+      disableButton(avatarModalSubmitButton, settings);
     })
-    .catch(console.error);
-  renderLoading(avatarModal, false);
+    .catch(console.error)
+    .finally(renderLoading(avatarModal, false));
 }
 
 function renderLoading(container, isLoading) {
@@ -258,6 +290,12 @@ cardModalCloseButton.addEventListener("click", () => {
 deleteModalCloseButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
+
+deleteModalCancelButton.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
+deleteModalDeleteButton.addEventListener("click", handleDeleteSubmit);
 
 editAvatarButton.addEventListener("click", () => {
   openModal(avatarModal);
