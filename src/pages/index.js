@@ -62,9 +62,13 @@ const editProfileModalDescriptionInput = editProfileModal.querySelector(
 const editAvatarButton = document.querySelector(".profile__avatar-button");
 const avatarModal = document.querySelector("#avatar-modal");
 const avatarForm = avatarModal.querySelector(".modal__form");
-const avatarInput = avatarModal.querySelector("#profile-avatar-input")
-const avatarModalCloseButton = avatarModal.querySelector(".modal__close-button");
-const avatarModalSubmitButton = avatarModal.querySelector(".modal__submit-button");
+const avatarInput = avatarModal.querySelector("#profile-avatar-input");
+const avatarModalCloseButton = avatarModal.querySelector(
+  ".modal__close-button"
+);
+const avatarModalSubmitButton = avatarModal.querySelector(
+  ".modal__submit-button"
+);
 
 // Preview elements
 const previewModal = document.querySelector("#preview-modal");
@@ -74,6 +78,7 @@ const previewModalCloseButton = previewModal.querySelector(
   ".modal__close-button_type_preview"
 );
 
+// Card elements
 const addCardModal = document.querySelector("#add-card-modal");
 const cardModalCloseButton = addCardModal.querySelector(".modal__close-button");
 const cardForm = addCardModal.querySelector(".modal__form");
@@ -83,6 +88,11 @@ const cardModalLinkInput = addCardModal.querySelector("#add-card-link-input");
 
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
+
+const deleteModal = document.querySelector("#delete-modal");
+const deleteModalCloseButton = deleteModal.querySelector(
+  ".modal__close-button"
+);
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -119,8 +129,12 @@ function getCardElement(data) {
   });
 
   cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
+    openModal(deleteModal);
   });
+
+  // cardDeleteButton.addEventListener("click", () => {
+  //   cardElement.remove();
+  // });
 
   cardImgEl.addEventListener("click", () => {
     openModal(previewModal);
@@ -165,6 +179,7 @@ function closeModal(modal) {
 
 function handleProfileFormSubmit(e) {
   e.preventDefault();
+  renderLoading(editProfileModal, true);
   api
     .editUserInfo({
       name: editProfileModalNameInput.value,
@@ -176,10 +191,12 @@ function handleProfileFormSubmit(e) {
       closeModal(editProfileModal);
     })
     .catch(console.error);
+  renderLoading(editProfileModal, false);
 }
 
 function handleCardFormSubmit(e) {
   e.preventDefault();
+  renderLoading(addCardModal, true);
   const inputValues = {
     name: cardModalNameInput.value,
     link: cardModalLinkInput.value,
@@ -188,10 +205,12 @@ function handleCardFormSubmit(e) {
   e.target.reset();
   disableButton(cardSubmitButton, settings);
   closeModal(addCardModal);
+  renderLoading(addCardModal, false);
 }
 
 function handleAvatarFormSubmit(e) {
   e.preventDefault();
+  renderLoading(avatarModal, true);
   api
     .editAvatar({
       avatar: avatarInput.value,
@@ -199,8 +218,18 @@ function handleAvatarFormSubmit(e) {
     .then((data) => {
       profileAvatar.src = data.avatar;
       closeModal(avatarModal);
+      e.target.reset();
     })
     .catch(console.error);
+  renderLoading(avatarModal, false);
+}
+
+function renderLoading(container, isLoading) {
+  if (isLoading) {
+    container.querySelector(".modal__submit-button").textContent = "Saving...";
+  } else {
+    container.querySelector(".modal__submit-button").textContent = "Save";
+  }
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -226,13 +255,17 @@ cardModalCloseButton.addEventListener("click", () => {
   closeModal(addCardModal);
 });
 
+deleteModalCloseButton.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
 editAvatarButton.addEventListener("click", () => {
   openModal(avatarModal);
 });
 
 avatarModalCloseButton.addEventListener("click", () => {
   closeModal(avatarModal);
-})
+});
 
 previewModalCloseButton.addEventListener("click", () => {
   closeModal(previewModal);
