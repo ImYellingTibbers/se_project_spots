@@ -6,6 +6,7 @@ import {
 } from "../scripts/validation.js";
 import "./index.css";
 import Api from "../utils/Api.js";
+import { renderLoading } from "../utils/utils.js";
 
 // Profile elements
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -172,7 +173,9 @@ function handleProfileFormSubmit(e) {
       disableButton(editProfileSubmitButton, settings);
     })
     .catch(console.error)
-    .finally(renderLoading(editProfileModal, false, "Saving...", "Save"));
+    .finally(() => {
+      renderLoading(editProfileModal, false, "Saving...", "Save");
+    });
 }
 
 function handleCardFormSubmit(e) {
@@ -196,7 +199,9 @@ function handleCardFormSubmit(e) {
       closeModal(addCardModal);
     })
     .catch(console.error)
-    .finally(renderLoading(addCardModal, false, "Saving...", "Save"));
+    .finally(() => {
+      renderLoading(addCardModal, false, "Saving...", "Save");
+    });
 }
 
 function handleDeleteSubmit(e) {
@@ -209,7 +214,9 @@ function handleDeleteSubmit(e) {
       closeModal(deleteModal);
     })
     .catch(console.error)
-    .finally(renderLoading(deleteModal, false, "Deleting...", "Delete"));
+    .finally(() => {
+      renderLoading(deleteModal, false, "Deleting...", "Delete");
+    });
 }
 
 function handleDeleteCard(cardElement, cardId) {
@@ -230,7 +237,7 @@ function handleLike(evt, id) {
 
 function handleAvatarFormSubmit(e) {
   e.preventDefault();
-  renderLoading(avatarModal, true, "Saving", "Save");
+  renderLoading(avatarModal, true, "Saving...", "Save");
   api
     .editAvatar({
       avatar: avatarInput.value,
@@ -242,15 +249,9 @@ function handleAvatarFormSubmit(e) {
       disableButton(avatarModalSubmitButton, settings);
     })
     .catch(console.error)
-    .finally(renderLoading(avatarModal, false, "Saving", "Save"));
-}
-
-function renderLoading(container, isLoading, loadingText, defaultText) {
-  if (isLoading) {
-    container.querySelector(".modal__submit-button").textContent = loadingText;
-  } else {
-    container.querySelector(".modal__submit-button").textContent = defaultText;
-  }
+    .finally(() => {
+      renderLoading(avatarModal, false, "Saving...", "Save");
+    });
 }
 
 profileEditButton.addEventListener("click", () => {
