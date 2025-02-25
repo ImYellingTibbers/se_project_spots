@@ -104,16 +104,13 @@ function getCardElement(data) {
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
-  if(data.isLiked) {
+  if (data.isLiked) {
     cardLikeButton.classList.add("card__like-button-liked");
   } else {
     cardLikeButton.classList.remove("card__like-button-liked");
   }
 
-  cardLikeButton.addEventListener(
-    "click",
-    (evt) => handleLike(evt, data._id)
-  );
+  cardLikeButton.addEventListener("click", (evt) => handleLike(evt, data._id));
 
   cardDeleteButton.addEventListener("click", () =>
     handleDeleteCard(cardElement, data._id)
@@ -188,6 +185,8 @@ function handleCardFormSubmit(e) {
     })
     .then((data) => {
       const inputValues = {
+        isLiked: false,
+        _id: data._id,
         name: data.name,
         link: data.link,
       };
@@ -220,16 +219,18 @@ function handleDeleteCard(cardElement, cardId) {
 }
 
 function handleLike(evt, id) {
-  const isLiked = evt.target.classList.contains("card__like-button-liked")
-  api.toggleLiked(id, isLiked)
-  .then(() => {
-  evt.target.classList.toggle("card__like-button-liked");
-  }).catch(console.error);
+  const isLiked = evt.target.classList.contains("card__like-button-liked");
+  api
+    .toggleLiked(id, isLiked)
+    .then(() => {
+      evt.target.classList.toggle("card__like-button-liked");
+    })
+    .catch(console.error);
 }
 
 function handleAvatarFormSubmit(e) {
   e.preventDefault();
-  renderLoading(avatarModal, true);
+  renderLoading(avatarModal, true, "Saving", "Save");
   api
     .editAvatar({
       avatar: avatarInput.value,
@@ -241,7 +242,7 @@ function handleAvatarFormSubmit(e) {
       disableButton(avatarModalSubmitButton, settings);
     })
     .catch(console.error)
-    .finally(renderLoading(avatarModal, false));
+    .finally(renderLoading(avatarModal, false, "Saving", "Save"));
 }
 
 function renderLoading(container, isLoading, loadingText, defaultText) {
