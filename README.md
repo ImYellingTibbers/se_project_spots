@@ -32,6 +32,6 @@ https://drive.google.com/file/d/17M6eTcRnXztPsuHfYFXnbh8hPKhd-7hp/view?usp=shari
 
 ## Project Images
 
-<img src="./images/full_site.png" alt="Full Site">
-<img src="./images/small_view.png" alt="Mobile View">
-<img src="./images/card_view.png" alt="Card View">
+<img src="./src/images/full_site.png" alt="Full Site">
+<img src="./src/images/small_view.png" alt="Mobile View">
+<img src="./src/images/card_view.png" alt="Card View">

@@ -156,18 +156,104 @@
   opacity: 40%;
 }
 
+.modal__delete-modal {
+  .modal__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .modal__close-button {
+    top: 0;
+    right: -52px;
+    background-image: url(../images/exit_icon_white.svg);
+    opacity: 1;
+  }
+
+  .modal__title {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .modal__delete-button {
+    background-color: rgba(255, 101, 101, 1);
+    color: rgba(33, 33, 33, 1);
+    font-weight: 500;
+  }
+
+  .modal__delete-button:hover {
+    background-color: rgba(255, 51, 51, 1);
+  }
+
+  .modal__cancel-button {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(33, 33, 33, 1);
+    font-weight: 500;
+    border: 1px solid rgba(33, 33, 33, 1);
+  }
+
+  .modal__cancel-button:hover {
+    background-color: rgba(33, 33, 33, 1);
+    color: #fff;
+  }
+}
+
 @media screen and (max-width: 630px) {
+  .modal__avatar {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .modal__title {
+      margin: 0 0 12px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 1.2;
+      padding: 8px 0;
+    }
+
+    .modal__label {
+      margin-bottom: 20px;
+    }
+  }
+
+  .modal__delete-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .modal__title {
+      font-size: 20px;
+      line-height: 1.2;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .modal__close-button {
+      top: -56px;
+      right: 6px;
+    }
+
+    .modal__buttons {
+      gap: 12px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal__delete-button {
+      max-width: 156px;
+    }
+
+    .modal__cancel-button {
+      max-width: 156px;
+    }
+  }
+
   .modal__content {
     padding: 12px;
     max-width: 300px;
   }
 
   .modal__close-button {
-    position: absolute;
     top: 12px;
     right: 12px;
-    width: 40px;
-    height: 40px;
   }
 
   .modal__title {
